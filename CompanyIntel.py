@@ -18,7 +18,6 @@ class company_data:
     - company discription
     """
     def __init__(self, company_id):
-        soup = self._extract_soup(company_id)
         self.company_id = company_id
         self.company_name = ''
         self.en_name = ''
@@ -32,6 +31,7 @@ class company_data:
         self.address = ''
         self.company_discription = ''
 
+        soup = self._extract_soup(company_id)
         self._extract_data(soup)
 
     def _extract_soup(self, company_id):
