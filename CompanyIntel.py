@@ -18,21 +18,20 @@ class company_data:
     - company discription
     """
     def __init__(self, company_id):
-        self.company_id = company_id
-        self.company_name = ''
-        self.en_name = ''
-        self.incorporation_date = ''
-        self.status = 'Active'
-        self.company_type = ''
-        self.is_governmental = False
-        self.is_limited = False
-        self.latest_annual_report = ''
-        self.company_purpose = ''
-        self.address = ''
-        self.company_discription = ''
-
         soup = self._extract_soup(company_id)
-        self._extract_data(soup)
+
+        self.company_id = company_id
+        self.company_name = self._extract_data(soup, 'שם חברה')
+        self.en_name = self._extract_data(soup, 'שם חברה באנגלית')
+        self.incorporation_date = self._extract_data(soup, 'תאריך התאגדות')
+        self.status = self._extract_data(soup, 'סטאטוס')
+        self.company_type = self._extract_data(soup, 'סוג חברה')
+        self.is_governmental = self._extract_data(soup, 'סוג חברה ממשלתית')
+        self.is_limited = self._extract_data(soup, 'סוג מגבלות')
+        self.latest_annual_report = self._extract_data(soup, 'דוח שנתי שהוגש')
+        self.company_purpose = self._extract_data(soup, 'מטרות החברה')
+        self.address = self._extract_data(soup, 'כתובת')
+        self.company_discription = self._extract_data(soup, 'תיאור חברה')
 
     def _extract_soup(self, company_id):
         """
@@ -45,67 +44,20 @@ class company_data:
         soup = BeautifulSoup(response.content, 'html.parser')
         return soup
 
-    def _extract_data(self, soup):
+    def _extract_data(self, soup, search_text):
         """
-        This function is used to extract the data from the soup object
+        This function is used to extract the data from the website
         :param soup: the soup object
-        :return: None
+        :param search_text: the search text
+        :return: the data from the website
         """
-
-        # get company name
-        company_name = soup.find(text='שם חברה')
-        company_name = company_name.parent.find_next_sibling()
-        self.company_name = company_name.text
-
-        # get english name
-        en_name = soup.find(text='שם חברה באנגלית')
-        en_name = en_name.parent.find_next_sibling()
-        self.en_name = en_name.text
-
-        # get launch date
-        incorporation_date = soup.find(text='תאריך התאגדות')
-        incorporation_date = incorporation_date.parent.find_next_sibling()
-        self.incorporation_date = incorporation_date.text
-
-        # get company status
-        status = soup.find(text='סטאטוס')
-        status = status.parent.find_next_sibling()
-        self.status = status.text
-
-        # get company type
-        company_type = soup.find(text='סוג חברה')
-        company_type = company_type.parent.find_next_sibling()
-        self.company_type = company_type.text
-
-        # get is governmental
-        is_governmental = soup.find(text='סוג חברה ממשלתית')
-        is_governmental = is_governmental.parent.find_next_sibling()
-        self.is_governmental = is_governmental.text
-
-        # get is limited
-        is_limited = soup.find(text='סוג מגבלות')
-        is_limited = is_limited.parent.find_next_sibling()
-        self.is_limited = is_limited.text
-
-        # get latest annual report
-        latest_annual_report = soup.find(text='דוח שנתי שהוגש')
-        latest_annual_report = latest_annual_report.parent.find_next_sibling()
-        self.latest_annual_report = latest_annual_report.text
-
-        # get company purpose
-        company_purpose = soup.find(text='מטרות החברה')
-        company_purpose = company_purpose.parent.find_next_sibling()
-        self.company_purpose = company_purpose.text
-
-        # get company address
-        address = soup.find(text='כתובת')
-        address = address.parent.find_next_sibling()
-        self.address = address.text.strip().replace('\xa0', '')
-
-        # get company discription
-        company_discription = soup.find(text='תיאור חברה')
+        company_discription = soup.find(text=search_text)
         company_discription = company_discription.parent.find_next_sibling()
-        self.company_discription = company_discription.text
+        if company_discription:
+            return company_discription.text.strip().replace('\xa0', '')
+        else:
+            return ''
+
 
 def get_companyID(company_name):
     """

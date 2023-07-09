@@ -11,12 +11,9 @@ class shareholder_data:
         - people
         :return: the data of the company and the people who hold the shares of the company.
         """
-        self.companies = []
-        self.people = []
-
         soup = self._extract_soup(company_id)
-        self._extract_data(soup)
 
+        self.companies, self.people = self._extract_data(soup)
 
     def _extract_soup(self, company_id):
         """
@@ -35,6 +32,9 @@ class shareholder_data:
         :param soup: the soup object
         :return: the data of the company and the people who hold the shares of the company.
         """
+        companies = []
+        people = []
+        
         # extract data from html
         table = soup.find(class_='table table-striped mb-0')
         links = table.select('a[href^="https://datacheck.co.il"]')
@@ -42,9 +42,11 @@ class shareholder_data:
         # insert data to lists
         for link in links:
             if link['href'].split('/')[3].split('.')[0] == 'company':
-                self.companies.append(link.text)
+                companies.append(link.text)
             else:
-                self.people.append(link.text)
+                people.append(link.text)
+
+        return companies, people
 
 """
 Test Code
