@@ -1,0 +1,3 @@
+Owner,Author,Disclaimer,Description,Version,Name,UIName,URL,entityName,oAuthSettingId,transformSettingIDs,seedIDs,outputEntities
+HawkEyes,Hawk Dev,,Turn date and location properties to entities,0.1.0,entitiestoproperties,entityTOproperties [IBI],https://hawk-eyes.com/run/entitiestoproperties,maltego.Company,,,demo,maltego.Location;maltego.DateTime
+HawkEyes,Hawk Dev,,Get company details from IBI,0.1.0,tocompanydetails,CompanyDetails [IBI],https://hawk-eyes.com/run/tocompanydetails,maltego.Company,,,demo,maltego.Company

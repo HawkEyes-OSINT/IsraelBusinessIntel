@@ -66,7 +66,6 @@ def get_companyID(company_name):
     :return: the company id
     """
     # create soup
-    company_name = 'גוגל ישראל בע"מ'
     company_name = company_name.replace(' ', '-').replace('"','')
     url = f"https://israeli-companies.com/hevra/מידע-על-{company_name}/"
     response = requests.get(url)

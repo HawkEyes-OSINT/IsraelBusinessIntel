@@ -7,6 +7,10 @@ from CompanyIntel import company_data
 
 class companies_owned:
     def __init__(self, owner_name):
+        """
+        This class is used to extract the data from the website
+        :param company_id: the company id
+        """
         soup = self._extract_soup(owner_name)
         self.companies = self._extract_data(soup)
 
@@ -30,6 +34,11 @@ class companies_owned:
         return soup
 
     def _extract_data(self, soup):
+        """
+        This function is used to extract the data from the website
+        :param soup: the soup object
+        :return: the company objects
+        """
         # get company ids from soup
         company_links = soup.select('a[href^="https://datacheck.co.il/company.ai?id="]')
         companies = [link['href'].split('=')[1] for link in company_links]
