@@ -51,6 +51,6 @@ class shareholder_data:
 """
 Test Code
 """
-shareholders = shareholder_data(company_id=516648565)
-print(shareholders.companies)
-print(shareholders.people)
+# shareholders = shareholder_data(company_id=516648565)
+# print(shareholders.companies)
+# print(shareholders.people)

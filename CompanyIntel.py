@@ -1,3 +1,4 @@
+# This class is used to extract company data from the website: https://datacheck.co.il/company.a
 import requests
 from bs4 import BeautifulSoup
 
