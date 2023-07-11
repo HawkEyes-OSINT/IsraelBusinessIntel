@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from CompanyIntel import company_data
+
 
 class shareholder_data:
     def __init__(self, company_id):
@@ -42,7 +44,7 @@ class shareholder_data:
         # insert data to lists
         for link in links:
             if link['href'].split('/')[3].split('.')[0] == 'company':
-                companies.append(link.text)
+                companies.append(company_data(link['href']))
             else:
                 people.append(link.text)
 

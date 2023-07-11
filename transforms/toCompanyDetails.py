@@ -1,5 +1,5 @@
 from maltego_trx.transform import DiscoverableTransform
-from maltego_trx.entities import Company
+from maltego_trx.entities import Company, Phrase
 from extensions import registry, IBItransforms
 from CompanyIntel import get_companyID, company_data
 import re

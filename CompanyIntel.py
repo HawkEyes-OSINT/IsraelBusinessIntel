@@ -21,7 +21,7 @@ class company_data:
     def __init__(self, company_id):
         soup = self._extract_soup(company_id)
 
-        self.company_id = company_id
+        self.company_id = self._extract_data(soup, 'ח.פ')
         self.company_name = self._extract_data(soup, 'שם חברה')
         self.en_name = self._extract_data(soup, 'שם חברה באנגלית')
         self.incorporation_date = self._extract_data(soup, 'תאריך התאגדות')
@@ -40,7 +40,10 @@ class company_data:
         :param company_id: the company id
         :return: the soup object
         """
-        url = f"https://datacheck.co.il/company.ai?id={company_id}"
+        if company_id.isdigit():
+            url = f"https://datacheck.co.il/company.ai?id={company_id}"
+        else:
+            url = company_id
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         return soup

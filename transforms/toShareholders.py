@@ -1,5 +1,5 @@
 from maltego_trx.transform import DiscoverableTransform
-from maltego_trx.entities import Person, Company, Phrase
+from maltego_trx.entities import Person, Company
 from extensions import registry, IBItransforms
 from ShareholderIntel import shareholder_data
 from CompanyIntel import get_companyID, company_data
@@ -28,18 +28,12 @@ class toShareholders(DiscoverableTransform):
         people = shareholders.people    
 
         # create company entities
-        response.addEntity(Phrase, companies[0])
         for company in companies:
-            try: # try to get company data from company name
-                company = company_data(get_companyID(company))
-                ent = response.addEntity(Company, company.company_name)
-                for key, value in company.__dict__.items():
-                    if key != 'company_name':
-                        display_name = key.replace('_', ' ').title()
-                        ent.addProperty(key, display_name, '', value)
-            except: # if not found, create entity with company name only and company_id propertyy
-                ent = response.addEntity(Company, company)
-                ent.addProperty('company_id', 'Company ID', '', '')
+            ent = response.addEntity(Company, company.company_name)
+            for key, value in company.__dict__.items():
+                if key != 'company_name':
+                    display_name = key.replace('_', ' ').title()
+                    ent.addProperty(key, display_name, '', value)
 
             # format entity
             ent.setLinkThickness(1)
