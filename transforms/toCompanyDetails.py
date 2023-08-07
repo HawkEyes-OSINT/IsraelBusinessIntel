@@ -16,7 +16,7 @@ class toCompanyDetails(DiscoverableTransform):
         company_name = request.Value
         hebrew_chars = re.compile(r'[^א-ת\s]')
         company_name = hebrew_chars.sub('', company_name)
-        if not company_name:
+        if company_name == '':
             response.addUIMessage("Error: No company name provided in Hebrew", "FatalError")
             return
 
