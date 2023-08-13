@@ -15,14 +15,11 @@ class toCompanyDetails(DiscoverableTransform):
     def create_entities(cls, request, response):
         company_name = request.Value
         hebrew_chars = re.compile(r'[^א-ת\s]')
-        fixed_company_name = hebrew_chars.sub('', company_name)
-        if not hebrew_chars.search(fixed_company_name):
+        if not hebrew_chars.search(company_name):
             ent = response.addEntity(Company, company_name)
             ent.addProperty('company_id', 'Company ID', '', '')
             response.addUIMessage("Error: No company name provided in Hebrew, try adding the company name in Hebrew or company ID to the entity properties", "FatalError")
             return
-        else:
-            company_name = fixed_company_name
 
         try: # try to get company details
             company_id = request.getProperty('company_id')
